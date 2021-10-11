@@ -4,7 +4,6 @@ CREATE TABLE users (
     email VARCHAR(64) NOT NULL,
     name VARCHAR(64) NOT NULL,
     password VARCHAR NOT NULL,
-    avatar VARCHAR,
     PRIMARY KEY (id)
 );
 
