@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="template :: head">
+</head>
+<body>
+
+<header th:replace="template :: header">
+</header>
+
+<main>
+  <nav class="nav">
+    <ul class="nav__list container">
+      <li class="nav__item">
+        <a href="all-lots.html">Доски и лыжи</a>
+      </li>
+      <li class="nav__item">
+        <a href="all-lots.html">Крепления</a>
+      </li>
+      <li class="nav__item">
+        <a href="all-lots.html">Ботинки</a>
+      </li>
+      <li class="nav__item">
+        <a href="all-lots.html">Одежда</a>
+      </li>
+      <li class="nav__item">
+        <a href="all-lots.html">Инструменты</a>
+      </li>
+      <li class="nav__item">
+        <a href="all-lots.html">Разное</a>
+      </li>
+    </ul>
+  </nav>
+  <form  class="form container" th:action="@{/sign-up}" th:object="${user}" method="post" th:classappend="${error != null ? 'form--invalid' : ''}"> <!-- form--invalid -->
+    <h2>Регистрация нового аккаунта</h2>
+    <div class="form__item" th:classappend="${#fields.hasErrors('email') ? 'form__item--invalid' : ''}"> <!-- form__item--invalid -->
+      <label for="email">E-mail*</label>
+      <input th:field="*{email}" id="email" type="text" name="email" placeholder="Введите e-mail" required>
+      <span th:if="${#fields.hasErrors('email')}" th:class="form__error">Введите корректный e-mail</span>
+    </div>
+    <div class="form__item" th:classappend="${#fields.hasErrors('password') ? 'form__item--invalid' : ''}">
+      <label for="password">Пароль*</label>
+      <input th:field="*{password}" id="password" type="password" placeholder="Введите пароль" required>
+      <span th:if="${#fields.hasErrors('password')}" th:class="form__error">Введите пароль</span>
+    </div>
+    <div class="form__item"th:classappend="${#fields.hasErrors('password') ? 'form__item--invalid' : ''}">
+      <label for="matchingPassword">Повторите пароль*</label>
+      <input th:field="*{matchingPassword}" id="matchingPassword" type="password" placeholder="Повторите пароль" required>
+      <span th:if="${#fields.hasErrors('password')}" th:class="form__error">Подтвердите пароль</span>
+    </div>
+    <div class="form__item"th:classappend="${#fields.hasErrors('name') ? 'form__item--invalid' : ''}">
+      <label for="name">Имя*</label>
+      <input th:field="*{name}" id="name" type="text" name="name" placeholder="Введите имя" required>
+      <span th:if="${#fields.hasErrors('name')}" th:class="form__error">Введите имя</span>
+    </div>
+    <span class="form__error form__error--bottom">Пожалуйста, исправьте ошибки в форме.</span>
+    <button type="submit" class="button">Зарегистрироваться</button>
+    <a class="text-link" th:href="@{/login}">Уже есть аккаунт</a>
+  </form>
+</main>
+
+<footer th:replace="template :: footer"></footer>
+
+</body>
+</html>
