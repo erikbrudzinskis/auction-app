@@ -1,5 +1,5 @@
 # Auction web app
-The app is developed using Spring Boot, Spring Security, Spring MVC, Spring Data, Validation, Thymeleaf, PostgreSQL.
+The app is developed using Spring Boot, Spring Security, Spring MVC, Spring Data, Validation, Thymeleaf, PostgreSQL via Heroku.
 
 Currently available features:
 - Registration of new users with validation & password one-way encryption
@@ -19,3 +19,4 @@ Work-in-progress features:
 - Lot moderation before publishing
 - User bidding history
 - User history of creating lots and their status
+- Deploying web-app on Heroku
