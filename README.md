@@ -19,4 +19,5 @@ Work-in-progress features:
 - Lot moderation before publishing
 - User bidding history
 - User history of creating lots and their status
+- Email functionality
 - Deploying web-app on Heroku
