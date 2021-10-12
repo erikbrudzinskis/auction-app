@@ -199,15 +199,23 @@ public class Lot {
         this.finished = finished;
     }
 
-    public String getTillEnds() {
-        return  Duration.between(LocalDateTime.now(), endDate).toDaysPart() +
-                "D " +
-                Duration.between(LocalDateTime.now(), endDate).toHoursPart() +
-                "H " +
-                Duration.between(LocalDateTime.now(), endDate).toMinutesPart() +
-                "M " +
-                Duration.between(LocalDateTime.now(), endDate).toSecondsPart() +
-                "S";
+    public Duration getTillEnds() {
+        return Duration.between(LocalDateTime.now(), endDate);
+    }
+
+    public String getTillEndsToString() {
+        StringBuilder sb = new StringBuilder();
+        long daysLeft = Duration.between(LocalDateTime.now(), endDate).toDaysPart();
+        long hoursLeft = Duration.between(LocalDateTime.now(), endDate).toHoursPart();
+        long minutesLeft = Duration.between(LocalDateTime.now(), endDate).toMinutesPart();
+        long secondsLeft = Duration.between(LocalDateTime.now(), endDate).toSecondsPart();
+        if (daysLeft >= 1) {
+            return sb.append(daysLeft).append("D ").append(hoursLeft).append("H ").append(minutesLeft).append("M ").append(secondsLeft).append("S").toString();
+        } else if (hoursLeft >= 1) {
+            return sb.append(hoursLeft).append("H ").append(minutesLeft).append("M ").append(secondsLeft).append("S").toString();
+        } else {
+            return sb.append(minutesLeft).append("M ").append(secondsLeft).append("S").toString();
+        }
     }
 
     public void setTillEnds(Duration tillEnds) {

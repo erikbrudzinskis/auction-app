@@ -49,8 +49,8 @@
               <span class="lot__amount">Стартовая цена</span>
               <span th:text="${lot.startPrice}" class="lot__cost"><b class="rub">р</b></span>
             </div>
-            <div th:text="${lot.tillEnds}" class="lot__timer timer">
-              16:54:12
+            <div th:text="${lot.getTillEndsToString()}" class="lot__timer timer" th:classappend="${lot.tillEnds.toSeconds() < 3600 ? 'timer--finishing' : ''}">
+              Timer
             </div>
           </div>
         </div>
