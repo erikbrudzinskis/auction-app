@@ -65,6 +65,9 @@ public class Lot {
     @Transient
     private MultipartFile image;
 
+    @Transient
+    private boolean finished;
+
     public Lot() {
         this.createdAt = LocalDateTime.now();
         this.imageUrl = null;
@@ -186,6 +189,14 @@ public class Lot {
 
     public void setBids(List<Bid> bids) {
         this.bids = bids;
+    }
+
+    public boolean isFinished() {
+        return LocalDateTime.now().isAfter(endDate);
+    }
+
+    public void setFinished(boolean finished) {
+        this.finished = finished;
     }
 
     public String getTillEnds() {

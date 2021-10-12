@@ -43,6 +43,7 @@ public class AppController {
     @RequestMapping("/")
     public String showIndex(Model model) {
         List<Lot> lots = lotService.findAll();
+        lots.removeIf(Lot::isFinished);
         Comparator<Lot> byTillEnds =
                 Comparator.comparingLong((Lot lot) -> Duration.between(LocalDateTime.now(), lot.getEndDate()).toSeconds());
         lots.sort(byTillEnds);
