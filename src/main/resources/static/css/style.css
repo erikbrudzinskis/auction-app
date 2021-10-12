@@ -239,6 +239,11 @@ h2 {
   line-height: 22px;
 }
 
+.user-menu__logged form {
+  display: inline-block;
+  width: 33px;
+}
+
 .user-menu__logged p {
   font-weight: 700;
   margin: 0;

@@ -1,6 +1,7 @@
 package com.evilkissyou.auctionapp.service;
 
 import com.evilkissyou.auctionapp.entity.Lot;
+import com.evilkissyou.auctionapp.entity.User;
 import com.evilkissyou.auctionapp.repository.LotRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -55,5 +56,8 @@ public class LotServiceImpl implements LotService {
         return lotRepository.findByKeyword(keyword);
     }
 
-
+    @Override
+    public List<Lot> findAllByUser(User user) {
+        return lotRepository.findAllByUser(user);
+    }
 }

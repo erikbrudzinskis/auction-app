@@ -120,4 +120,16 @@ public class AppController {
         model.addAttribute("title", "Search Result");
         return "index";
     }
+
+    @GetMapping("/my-lots")
+    public String showMyLots(Model model, Authentication authentication) {
+        User user = userService.findByEmail(authentication.getName());
+        List<Lot> lots = lotService.findAllByUser(user);
+        Comparator<Lot> byTillEnds =
+                Comparator.comparingLong((Lot lot) -> Duration.between(LocalDateTime.now(), lot.getEndDate()).toSeconds());
+        lots.sort(byTillEnds);
+        model.addAttribute("lots", lots);
+        model.addAttribute("title", "My Lots");
+        return "index";
+    }
 }
