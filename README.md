@@ -11,9 +11,9 @@ Currently available features:
 - Uploading user pictures to file system
 - Pages for individual lots by id
 - Bids system
+- Search by lot name
 
 Work-in-progress features:
-- Search by lot name
 - Pagination
 - Admin panel functionality
 - Lot moderation before publishing
