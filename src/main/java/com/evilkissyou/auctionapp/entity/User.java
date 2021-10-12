@@ -3,6 +3,7 @@ package com.evilkissyou.auctionapp.entity;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -11,7 +12,7 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Long id;
+    private int id;
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;
@@ -33,6 +34,9 @@ public class User {
     )
     private List<Role> roles;
 
+    @OneToMany(mappedBy = "user")
+    private Set<Bid> bids;
+
     public User() {
         this.createdAt = LocalDateTime.now();
     }
@@ -44,11 +48,11 @@ public class User {
         this.password = password;
     }
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

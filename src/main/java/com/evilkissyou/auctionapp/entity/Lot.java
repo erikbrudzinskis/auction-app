@@ -9,6 +9,7 @@ import java.math.RoundingMode;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.List;
 
 
 @Entity
@@ -29,9 +30,6 @@ public class Lot {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "category_id")
-    private int categoryId;
-
     @Column(name = "description")
     private String description;
 
@@ -44,14 +42,22 @@ public class Lot {
     @Column(name = "lot_step")
     private BigDecimal lotStep;
 
-    @Column(name = "user_id")
-    private Long userId;
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @Column(name = "winner_id")
     private Long winnerId;
 
     @Column(name = "passed_moderation")
     private boolean passedModeration;
+
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
+
+    @OneToMany(mappedBy = "lot")
+    private List<Bid> bids;
 
     @Transient
     private Duration tillEnds;
@@ -64,15 +70,14 @@ public class Lot {
         this.imageUrl = null;
     }
 
-    public Lot(LocalDateTime endDate, String name, int categoryId, String description, String imageUrl, BigDecimal startPrice, BigDecimal lotStep, Long userId, Long winnerId, boolean passedModeration, MultipartFile image) {
+    public Lot(LocalDateTime endDate, String name, String description, String imageUrl, BigDecimal startPrice, BigDecimal lotStep, User user, Long winnerId, boolean passedModeration, MultipartFile image) {
         this.endDate = endDate;
         this.name = name;
-        this.categoryId = categoryId;
         this.description = description;
         this.imageUrl = imageUrl;
         this.startPrice = new BigDecimal(String.valueOf(startPrice)).setScale(2, RoundingMode.HALF_UP);
         this.lotStep = new BigDecimal(String.valueOf(lotStep)).setScale(2, RoundingMode.HALF_UP);
-        this.userId = userId;
+        this.user = user;
         this.winnerId = winnerId;
         this.passedModeration = passedModeration;
         this.tillEnds = Duration.between(LocalDateTime.now(), endDate);
@@ -111,14 +116,6 @@ public class Lot {
         this.name = name;
     }
 
-    public int getCategoryId() {
-        return categoryId;
-    }
-
-    public void setCategoryId(int categoryId) {
-        this.categoryId = categoryId;
-    }
-
     public String getDescription() {
         return description;
     }
@@ -151,12 +148,12 @@ public class Lot {
         this.lotStep = lotStep;
     }
 
-    public Long getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Long getWinnerId() {
@@ -173,6 +170,22 @@ public class Lot {
 
     public void setPassedModeration(boolean passedModeration) {
         this.passedModeration = passedModeration;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    public List<Bid> getBids() {
+        return bids;
+    }
+
+    public void setBids(List<Bid> bids) {
+        this.bids = bids;
     }
 
     public String getTillEnds() {

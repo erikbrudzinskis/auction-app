@@ -1,6 +1,8 @@
 package com.evilkissyou.auctionapp.controller;
 
+import com.evilkissyou.auctionapp.entity.Bid;
 import com.evilkissyou.auctionapp.entity.Lot;
+import com.evilkissyou.auctionapp.entity.User;
 import com.evilkissyou.auctionapp.service.BidService;
 import com.evilkissyou.auctionapp.service.CategoryService;
 import com.evilkissyou.auctionapp.service.LotService;
@@ -16,7 +18,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.security.Principal;
 import java.util.List;
 import java.util.UUID;
 
@@ -48,6 +49,7 @@ public class AppController {
         List<Lot> lots = lotService.findByCategoryIdOrderByEndDateAsc(id);
         model.addAttribute("lots", lots);
         model.addAttribute("title", "Category " + id);
+        model.addAttribute("title", categoryService.findById(id).getName());
         return "index";
     }
 
@@ -62,7 +64,7 @@ public class AppController {
     }
 
     @PostMapping("/add-lot")
-    public String saveAddLot(@ModelAttribute Lot lot, @RequestParam(value = "image", required = false) MultipartFile image) throws IOException {
+    public String saveAddLot(@ModelAttribute Lot lot, @RequestParam(value = "image", required = false) MultipartFile image, Authentication authentication) throws IOException {
         if(!image.getOriginalFilename().equals("")) {
             UUID uuid = UUID.randomUUID();
             String path = "/uploads/";
@@ -72,14 +74,30 @@ public class AppController {
         } else {
             lot.setImageUrl("/img/no_image.jpg");
         }
+        User user = userService.findByEmail(authentication.getName());
+        lot.setUser(user);
         lotService.save(lot);
-        return "redirect:";
+        return "redirect:/lot?id=" + lot.getId();
     }
 
     @GetMapping("/lot")
     public String showLot(@RequestParam("id") int id, Model model) {
+        // Find the lot
         Lot lot = lotService.findById( id);
         model.addAttribute("lot", lot);
+        // Find all bids for the lot
+        List<Bid> bids = bidService.findByLotOrderByCreatedAtDesc(lot);
+        model.addAttribute("bids", bids);
+        // Create new bid so that the user can bid on the lot
+        Bid bid = new Bid();
+        model.addAttribute("bid", bid);
+        model.addAttribute("title", "Lot number: " + lot.getId());
         return "lot";
+    }
+
+    @PostMapping("/add-bid")
+    public String addBid(@ModelAttribute Bid bid, Authentication authentication) {
+        bidService.addNewBid(bid, authentication.getName());
+        return "redirect:/lot?id=" + bid.getLot().getId();
     }
 }
