@@ -9,11 +9,11 @@ Currently available features:
 - Timer till a lot ends
 - Adding new lots 
 - Uploading user pictures to file system
+- Pages for individual lots by id
+- Bids system
 
 Work-in-progress features:
-- Pages for individual lots by id
 - Search by lot name
-- Bids system
 - Pagination
 - Admin panel functionality
 - Lot moderation before publishing
