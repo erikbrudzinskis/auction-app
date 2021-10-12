@@ -10,4 +10,5 @@ public interface LotService {
     Lot findById(int id);
     void save(Lot lot);
     void deleteById(int id);
+    List<Lot> findByKeyword(String keyword);
 }

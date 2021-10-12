@@ -108,4 +108,16 @@ public class AppController {
         bidService.addNewBid(bid, authentication.getName());
         return "redirect:/lot?id=" + bid.getLot().getId();
     }
+
+    @RequestMapping("/search")
+    public String search(Model model, String keyword) {
+        List<Lot> lots = lotService.findByKeyword(keyword);
+        lots.removeIf(Lot::isFinished);
+        Comparator<Lot> byTillEnds =
+                Comparator.comparingLong((Lot lot) -> Duration.between(LocalDateTime.now(), lot.getEndDate()).toSeconds());
+        lots.sort(byTillEnds);
+        model.addAttribute("lots", lots);
+        model.addAttribute("title", "Search Result");
+        return "index";
+    }
 }

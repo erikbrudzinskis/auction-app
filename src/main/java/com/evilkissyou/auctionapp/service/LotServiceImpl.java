@@ -49,4 +49,11 @@ public class LotServiceImpl implements LotService {
     public void deleteById(int id) {
         lotRepository.deleteById(id);
     }
+
+    @Override
+    public List<Lot> findByKeyword(String keyword) {
+        return lotRepository.findByKeyword(keyword);
+    }
+
+
 }
