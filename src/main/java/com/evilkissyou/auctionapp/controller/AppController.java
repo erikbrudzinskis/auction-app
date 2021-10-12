@@ -18,6 +18,10 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
 
@@ -39,6 +43,9 @@ public class AppController {
     @RequestMapping("/")
     public String showIndex(Model model) {
         List<Lot> lots = lotService.findAll();
+        Comparator<Lot> byTillEnds =
+                Comparator.comparingLong((Lot lot) -> Duration.between(LocalDateTime.now(), lot.getEndDate()).toSeconds());
+        lots.sort(byTillEnds);
         model.addAttribute("lots", lots);
         model.addAttribute("title", "Main page");
         return "index";
