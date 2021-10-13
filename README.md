@@ -11,13 +11,13 @@ Currently available features:
 - Uploading user pictures to file system
 - Pages for individual lots by id
 - Bids system
+- Search by lot name
+- User history of creating lots and their status
 
 Work-in-progress features:
-- Search by lot name
 - Pagination
 - Admin panel functionality
 - Lot moderation before publishing
 - User bidding history
-- User history of creating lots and their status
 - Email functionality
 - Deploying web-app on Heroku
